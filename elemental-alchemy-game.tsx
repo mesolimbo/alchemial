@@ -169,19 +169,24 @@ const ElementalAlchemy = () => {
 
     try {
         // Single optimized prompt for Claude Haiku 3.5
-        const prompt = `Combine by free assiciation: ${pill1.name} + ${pill2.name}
+        const prompt = `You are a clever wordsmith playing a game where you take two concepts to find a new related concept and an accompanying emoji based on the two source concepts. Your combinations follow these rules:
 
-Combination guidelines:
-- Prefer shorter common, recognizable phrases:
-    - animals, plants, objects, places, pop culture, history, mythology, science, arts, celebrities, humanities, food, etc.
-- Avoid technical jargon unless widely known
-- New elements should be somewhat different from the source elements so we get more diversity of ideas over time
-- ${stabilityNote}
-- Names: 1-6 words max
-- Choose fitting emoji
-- Be creative so we get more diversity over subsequent generations
+- Aim for simple answers that display cleverless through the association rather than making up new words or phrases.
+- Be simple, for example a cat an dog can combine to rain. Napoleon and a bomb can make Napoleon Blownaparte.
+- Adding two of the same thing can make a slightly stronger version of that thing, but it can also be something else clever.
+- Short 1-2 word answers are best, but you can go a little longer if your answer is very witty and recognizeable.
+- Your answer should be a noun, but it can be almost any popular concet borrowing from art, literature, film, history, religion and mythology, science, pop culture, celebrity gossip, nature, etc. Don't just relly on adjectives for new material.
+- Your choices should mostly be found in an encyclopedia, but you are allowed to invent new things if the source is weird.
+- Combine boring sources into more interesting concepts, and combine weird sources into plainer concepts.
+- Keep your answers at a precocious 9th grade reading level.
+- The emoji should reflect the essence of the new concept.
 
-JSON only:
+Here are the two elements to combine:
+
+Element 1: ${pill1.name} ${pill1.emoji}
+Element 2: ${pill2.name} ${pill2.emoji}
+
+Your answer should be JSON only:
 {"name":"Element Text","emoji":"🔮"}`;
 
         console.log("Making API request with prompt:", prompt);
