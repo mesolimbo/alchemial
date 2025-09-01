@@ -1,34 +1,18 @@
 {
-  "name": "elemental-alchemy-game",
+  "name": "alchemial",
   "version": "1.0.0",
-  "description": "An interactive elemental alchemy game built with React",
-  "type": "module",
+  "description": "An interactive elemental alchemy game",
+  "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "server": "node server.js",
-    "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
-    "kill-server": "powershell \"$port = netstat -ano | Select-String ':3001.*LISTENING'; if($port) { $processId = ($port -split '\\s+')[-1]; Stop-Process -Id $processId -Force; Write-Host 'Killed process on port 3001' } else { Write-Host 'No process found on port 3001' }\""
+    "dev": "cd app && npm run dev",
+    "build": "cd app && npm run build",
+    "preview": "cd app && npm run preview",
+    "server": "cd app && npm run server",
+    "dev:full": "cd app && npm run dev:full",
+    "install:app": "cd app && npm install",
+    "install:all": "npm run install:app"
   },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tone": "^14.7.77",
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "node-fetch": "^3.3.2",
-    "dotenv": "^16.3.1"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.43",
-    "@types/react-dom": "^18.2.17",
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.32",
-    "tailwindcss": "^3.3.6",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.8",
-    "concurrently": "^8.2.2"
-  }
+  "workspaces": [
+    "app"
+  ]
 }
