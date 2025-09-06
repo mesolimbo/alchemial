@@ -1,0 +1,26 @@
+{
+  "name": "elemental-alchemy-client",
+  "version": "1.0.1",
+  "description": "Client-side build for elemental alchemy game",
+  "type": "module",
+  "scripts": {
+    "build": "bun run clean && bun run build:css && bun run build:js",
+    "build:js": "NODE_ENV=production bun build src/index.tsx --outfile=../dist/bundle.js --minify --target=browser --external=./index.css --define:process.env.NODE_ENV='\"production\"'",
+    "build:css": "bunx tailwindcss -i src/index.css -o ../dist/bundle.css --minify",
+    "dev": "bun run build:css && bun build src/index.tsx --outfile=../dist/bundle.js --watch --external=./index.css",
+    "clean": "powershell -Command \"New-Item -ItemType Directory -Force -Path '../dist' | Out-Null; if (Test-Path '../dist/bundle.js') { Remove-Item '../dist/bundle.js' }; if (Test-Path '../dist/bundle.css') { Remove-Item '../dist/bundle.css' }\""
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "tone": "^14.7.77"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.2.2"
+  }
+}

@@ -1,15 +1,18 @@
 {
   "name": "alchemial",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An interactive elemental alchemy game",
   "private": true,
   "scripts": {
-    "dev": "cd app && npm run dev",
-    "build": "cd app && npm run build",
-    "preview": "cd app && npm run preview",
-    "server": "cd app && npm run server",
-    "dev:full": "cd app && npm run dev:full",
-    "install:app": "cd app && npm install",
+    "dev": "cd npm && npm run dev",
+    "build": "bash build.sh",
+    "build:client": "cd client && bun install && bun run build",
+    "dev:client": "cd client && bun run dev",
+    "clean": "rm -rf dist/client/bundle.js dist/client/bundle.css",
+    "preview": "cd npm && npm run preview",
+    "server": "cd npm && npm run server",
+    "dev:full": "cd npm && npm run dev:full",
+    "install:app": "cd npm && npm install",
     "install:all": "npm run install:app"
   },
   "workspaces": [

@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import * as Tone from 'tone';
 
-/// <reference types="./vite-env.d.ts" />
-
 // Type definitions
 interface Ingredient {
   name: string;
@@ -136,33 +134,12 @@ const ElementalAlchemy = () => {
       .trim();
   };
 
-  const generateCombination = async (pill1: Pill, pill2: Pill, existingElements: string[] = []): Promise<Pill> => {
+  const generateCombination = async (pill1: Pill, pill2: Pill): Promise<Pill> => {
     // All variables declared at function scope
     const pill1Gen = pill1.generation || 0;
     const pill2Gen = pill2.generation || 0;
     const maxGeneration = Math.max(pill1Gen, pill2Gen);
-    const minGeneration = Math.min(pill1Gen, pill2Gen);
     const newGeneration = maxGeneration + 1;
-
-    // Normalize the avoidance list to prevent similar names
-    const normalizedExisting = existingElements.map(name => normalizeElementName(name));
-    const uniqueNormalizedExisting = [...new Set(normalizedExisting)]; // Remove duplicates
-    const avoidList = uniqueNormalizedExisting.length > 0 ? `\nAvoid anything that normalizes to: ${uniqueNormalizedExisting.join(', ')}` : '';
-
-    // Determine creativity level based on generation mix
-    let creativityLevel = "moderate";
-    let stabilityNote = "";
-    
-    if (minGeneration === 0) {
-        creativityLevel = minGeneration === maxGeneration ? "logical" : "creative";
-        stabilityNote = maxGeneration === 0 ? "both are basic elements" : "basic element provides stability";
-    } else if (minGeneration <= 1) {
-        creativityLevel = "creative";
-        stabilityNote = "early-generation elements allow creative combinations";
-    } else {
-        creativityLevel = "wild";
-        stabilityNote = "high-generation elements create unexpected results";
-    }
 
     setIsGenerating(true);
     setGeneratingPair(`${pill1.name} + ${pill2.name} ⚗️`);
@@ -189,9 +166,8 @@ Element 2: ${pill2.name} ${pill2.emoji}
 Your answer should be JSON only:
 {"name":"Element Text","emoji":"🔮"}`;
 
-        console.log("Making API request with prompt:", prompt);
-        
-        const response = await fetch("http://localhost:3001/api/generate", {
+        // Change API endpoint to use the Python CGI backend
+        const response = await fetch("/api/generate", {
             method: "POST",
             headers: { 
               "Content-Type": "application/json"
@@ -314,13 +290,13 @@ Your answer should be JSON only:
         };
     }
 
-    const newPill = await generateCombination(pill1, pill2, existingElementNames);
+    const newPill = await generateCombination(pill1, pill2);
 
     // Double-check the new pill doesn't conflict with existing normalized names
     const newPillNormalized = normalizeElementName(newPill.name);
     if (normalizedExistingNames.includes(newPillNormalized)) {
         // Generate an alternative since this name already exists
-        const newPillAlt = await generateCombination(pill1, pill2, [...existingElementNames, newPill.name]);
+        const newPillAlt = await generateCombination(pill1, pill2);
 
         // Cache using normalized key but store the alternative result
         if (!combinations.has(normalizedKey)) {
